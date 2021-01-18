@@ -87,6 +87,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
       }
       return Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.blue[900],
             title: Text('Search Results'),
           ),
           drawer: NexusDrawer(),

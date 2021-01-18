@@ -36,9 +36,10 @@ class MyApp extends StatelessWidget {
               child: MaterialApp(
                   theme: ThemeData(
                       brightness: Brightness.light,
-                      primaryColor: Colors.green,
-                      accentColor: Colors.green[800],
-                      textTheme: GoogleFonts.fredokaOneTextTheme(
+                      primaryColor: Colors.blue,
+                      accentColor: Colors.blue[800],
+                      textTheme: GoogleFonts.montserratTextTheme(
+                      //GoogleFonts.fredokaOneTextTheme(
                           Theme.of(context).textTheme)),
                   home: appSnapshot.connectionState != ConnectionState.done
                       ? LoadingScreen()

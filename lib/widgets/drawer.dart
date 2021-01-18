@@ -12,7 +12,7 @@ class NexusDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.green[400],
+              color: Colors.blue[900],
             ),
             child: Text(
               'Trading Nexus',
@@ -23,11 +23,15 @@ class NexusDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.message),
+            leading: Icon(
+              Icons.message,
+              color: Colors.blue[900],
+              ),
             title: Text('Messages'),
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
+            leading: Icon(Icons.account_circle,
+            color: Colors.blue[900],),
             title: Text('Profile'),
             onTap: () {
               Navigator.of(context).pop();
@@ -35,7 +39,8 @@ class NexusDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.logout,
+              color: Colors.blue[900],),
               title: Text('Log Out'),
               onTap: () async {
                 Navigator.of(context).pop();
