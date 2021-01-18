@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 enum AuthMode { Signup, Login }
 
 String uid;
+String _labelText;
+String _hintText;
 
 class ZeroScreen extends StatefulWidget {
   static const routeName = '/auth';
@@ -183,113 +185,140 @@ class _AuthCardState extends State<AuthCard> {
     return Container(
         height: deviceSize.height,
         child: SingleChildScrollView(
-            child: Card(
-          elevation: 0,
-          child: Container(
-            constraints: BoxConstraints(
-              minHeight: _authMode == AuthMode.Signup ? 320 : 260,
+            child: Column(
+          children: [
+            SizedBox(
+              height: 50,
             ),
-            padding: EdgeInsets.all(18),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              right: 12,
-                              left: 10,
-                              bottom: deviceSize.height * 0.1,
-                              top: deviceSize.height * 0.05),
-                          child: SingleChildScrollView(
-                              child: Column(children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 94.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
+            Card(
+              elevation: 0,
+              child: Container(
+                constraints: BoxConstraints(
+                  minHeight: _authMode == AuthMode.Signup ? 320 : 260,
+                ),
+                padding: EdgeInsets.all(18),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        // padding: EdgeInsets.symmetric(
+                        //     vertical: 8.0, horizontal: 94.0),
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        child: Image.asset('lib/assets/images/imageee.png',
+                            // width: deviceSize.width * 0.2,
+                            // height: deviceSize.height * 0.2,
+                            fit: BoxFit.cover),
+                      ),
+                      Card(
+                          color: Colors.blue[50],
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  right: 12,
+                                  left: 10,
+                                  bottom: deviceSize.height * 0.1,
+                                  top: deviceSize.height * 0.05),
+                              child: SingleChildScrollView(
+                                  child: Column(children: <Widget>[
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 20, left: 20),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'E-Mail',
+                                          fillColor: Colors.white,
+                                          focusColor: Colors.blue,
+                                          labelStyle: TextStyle(
+                                              color: Colors.grey[600]),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.white))),
+                                      keyboardType: TextInputType.emailAddress,
+                                      onSaved: (value) {
+                                        _authData['email'] = value;
+                                      },
+                                    )),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 20, left: 20),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Password',
+                                          labelStyle: TextStyle(color: Colors.grey[600]),
+                                          border: OutlineInputBorder()
+                                        ),
+                                      obscureText: true,
+                                      controller: _passwordController,
+                                      onSaved: (value) {
+                                        _authData['password'] = value;
+                                      },
+                                    )),
+                              if (_authMode == AuthMode.Signup)
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(right: 20, left: 20 ,top:15),
+                                      child: TextFormField(
+                                        enabled: _authMode == AuthMode.Signup,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                            labelText: 'Confirm Password',
+                                            labelStyle: TextStyle(
+                                                color: Colors.grey[600])),
+                                        obscureText: true,
+                                        validator: _authMode == AuthMode.Signup
+                                            ? null
+                                            : null,
+                                      )),
+                              ])))),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      if (_isLoading)
+                        CircularProgressIndicator()
+                      else
+                        Card(
+                            elevation: 0,
+                            child: Column(children: <Widget>[
+                              RaisedButton(
+                                elevation: 20,
+                                child: Text(_authMode == AuthMode.Login
+                                    ? 'LOGIN'
+                                    : 'SIGN UP'),
+                                onPressed: _submit,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 30.0, vertical: 8.0),
+                                color: Colors.blue[800],
+                                textColor: Colors.white,
                               ),
-                              child: Image.asset('lib/assets/images/yo.png',
-                                  width: deviceSize.width * 0.2,
-                                  height: deviceSize.height * 0.2,
-                                  fit: BoxFit.contain),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(right: 20, left: 20),
-                                child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'E-Mail'),
-                                  keyboardType: TextInputType.emailAddress,
-                                  onSaved: (value) {
-                                    _authData['email'] = value;
-                                  },
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(right: 20, left: 20),
-                                child: TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'Password'),
-                                  obscureText: true,
-                                  controller: _passwordController,
-                                  onSaved: (value) {
-                                    _authData['password'] = value;
-                                  },
-                                )),
-                            if (_authMode == AuthMode.Signup)
-                              Padding(
-                                  padding: EdgeInsets.only(right: 20, left: 20),
-                                  child: TextFormField(
-                                    enabled: _authMode == AuthMode.Signup,
-                                    decoration: InputDecoration(
-                                        labelText: 'Confirm Password'),
-                                    obscureText: true,
-                                    validator: _authMode == AuthMode.Signup
-                                        ? null
-                                        : null,
-                                  )),
-                          ])))),
-                  SizedBox(
-                    height: 20,
+                              FlatButton(
+                                child: Text(
+                                    '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                                onPressed: _switchAuthMode,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 30.0, vertical: 4),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                textColor: Colors.blue[800],
+                              )
+                            ])),
+                    ],
                   ),
-                  if (_isLoading)
-                    CircularProgressIndicator()
-                  else
-                    Card(
-                        elevation: 0,
-                        child: Column(children: <Widget>[
-                          RaisedButton(
-                            elevation: 20,
-                            child: Text(_authMode == AuthMode.Login
-                                ? 'LOGIN'
-                                : 'SIGN UP'),
-                            onPressed: _submit,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 8.0),
-                            color: Colors.green[600],
-                            textColor: Colors.white,
-                          ),
-                          FlatButton(
-                            child: Text(
-                                '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
-                            onPressed: _switchAuthMode,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 4),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            textColor: Theme.of(context).primaryColor,
-                          )
-                        ])),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         )));
   }
 }

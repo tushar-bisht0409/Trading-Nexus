@@ -16,10 +16,18 @@ class HomeTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
+                color: Colors.blue[900],
                   height: queryData.size.height * 0.13,
                   child: TabBar(
-                      labelColor: Colors.green[800],
-                      unselectedLabelColor: Colors.green[300],
+                      labelColor: Colors.blue[900],
+                      unselectedLabelColor: Colors.white,
+                     indicator: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        // bottomLeft:Radius.circular(50),
+                        // bottomRight: Radius.circular(50),
+                        topRight: Radius.circular(50)),
+                    color: Colors.white),
                       tabs: [
                         Tab(
                             icon: Icon(
